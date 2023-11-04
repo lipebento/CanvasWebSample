@@ -6,7 +6,7 @@
   </head>
   
   <body>
-    <div class="timer split left">
+    <div class="timer vsplit top">
         <div class="centered">
             <h1>Timer:</h1>
             <p id="timer">0:00</p>
@@ -17,6 +17,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var timerElement = document.getElementById("timer");
+
             var startDate = new Date(2023, 9, 17); // Note: Months are zero-indexed, so 9 represents October.
 
             function updateTimer() {
@@ -54,11 +55,11 @@
         });
     </script>
 
-    <div  class="split right">
+    <div  class="vsplit bottom">
         <div id="globeViz" class="centered"></div>
     </div>
 
-    <div  class="split right higher">
+    <div  class="vsplit bottom higher">
         <div class="centered"> 
             <h1>Distance:</h1>
             <p>> 3000 miles / 5000 km</p>
@@ -93,8 +94,11 @@
         .pointRadius(0.02)
         .pointsMerge(true);
     
+        // load data
+    
         const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
         const routeParse = ([airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment]) => ({ airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment});
+    
     
         Promise.all([
         fetch('https://raw.githubusercontent.com/lipebento/CanvasWebSample/main/airports.dat').then(res => res.text())

@@ -6,10 +6,8 @@ body {
 
 .timer {
     background-color: #ffffff;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    display: inline-block;
 }
 
 body {
@@ -27,6 +25,14 @@ body {
     padding-top: 0px;
   }
 
+  .vsplit {
+    height: 50%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+  }
+
   .higher{
     z-index: 2;
     pointer-events: none; 
@@ -39,6 +45,15 @@ body {
   
   .right {
     right: 0;
+  }
+
+  .top {
+    top: 0;
+    background-color: #111;
+  }
+  
+  .bottom {
+    bottom: 0;
   }
   
   .centered {
