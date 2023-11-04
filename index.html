@@ -41,7 +41,6 @@
                 var elapsedDays = days;
                 //var remainingWeeks = weeks % 4; // Approximating a month as 4 weeks
 
-                // Display the timer information
                 var timerString =
                     elapsedDays + " Days, " +
                     hours + " : " +
@@ -51,10 +50,7 @@
                 timerElement.textContent = timerString;
             }
 
-            // Call updateTimer immediately to display the initial time
             updateTimer();
-
-            // Update the timer every second (1000 milliseconds)
             setInterval(updateTimer, 1000);
         });
     </script>
