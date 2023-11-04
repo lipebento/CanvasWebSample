@@ -2,20 +2,10 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #000000;
-}
-
-.timer {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-body {
-    font-family: Arial;
     color: rgb(255, 255, 255);
-  }
+}
   
-  .split {
+.split {
     height: 100%;
     width: 50%;
     position: fixed;
@@ -23,48 +13,48 @@ body {
     top: 0;
     overflow-x: hidden;
     padding-top: 0px;
-  }
+}
 
-  .vsplit {
+.vsplit {
     height: 50%;
     width: 100%;
     position: fixed;
     z-index: 1;
     overflow-x: hidden;
-  }
+}
 
-  .higher{
+.higher{
     z-index: 2;
     pointer-events: none; 
-  }
-  
-  .left {
+}
+
+.left {
     left: 0;
     background-color: #111;
-  }
-  
-  .right {
-    right: 0;
-  }
+}
 
-  .top {
+.right {
+    right: 0;
+}
+
+.top {
     top: 0;
     background-color: #111;
-  }
-  
-  .bottom {
+}
+
+.bottom {
     bottom: 0;
-  }
-  
-  .centered {
+}
+
+.centered {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-  }
-  
-  .centered img {
+}
+
+.centered img {
     width: 150px;
     border-radius: 50%;
-  }
+}

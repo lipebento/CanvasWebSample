@@ -3,6 +3,7 @@
     <script src="https://unpkg.com/d3-dsv@3.0.1/dist/d3-dsv.min.js"></script>
     <script src="https://unpkg.com/index-array-by@1.4.1/dist/index-array-by.min.js"></script>
     <script src="https://unpkg.com/globe.gl@2.32.1/dist/globe.gl.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   
   <body>
@@ -69,14 +70,13 @@
     
     <!--globe scripting-->
     <script>
-        const COUNTRY = 'United States';
-        const OPACITY = 0.8;
+        const OPACITY = 0.95;
     
         const myGlobe = Globe()
         (document.getElementById('globeViz'))
     
         .globeImageUrl('https://unpkg.com/three-globe@2.30.0/example/img/earth-night.jpg')
-        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
+        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 4 }) // aim at continental US centroid
     
         .arcLabel(d => `${d.srcIata} &#8594; ${d.dstIata}`)
         .arcStartLat(d => +d.srcAirport.lat)
