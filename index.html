@@ -80,7 +80,7 @@
         (document.getElementById('globeViz'))
     
         .globeImageUrl('https://unpkg.com/three-globe@2.30.0/example/img/earth-night.jpg')
-        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 4 }) // aim at continental US centroid
+        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 5 }) // aim at continental US centroid
     
         .arcLabel(d => `${d.srcIata} &#8594; ${d.dstIata}`)
         .arcStartLat(d => +d.srcAirport.lat)
