@@ -1,27 +1,63 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
-  
     <script src="https://unpkg.com/d3-dsv@3.0.1/dist/d3-dsv.min.js"></script>
     <script src="https://unpkg.com/index-array-by@1.4.1/dist/index-array-by.min.js"></script>
-  
     <script src="https://unpkg.com/globe.gl@2.32.1/dist/globe.gl.min.js"></script>
-    <!--<script src="../../dist/globe.gl.js"></script>-->
-
-    
   </head>
   
   <body>
-
-
     <div class="timer split left">
         <div class="centered">
             <h1>Timer:</h1>
             <p id="timer">0:00</p>
         </div>
-
     </div>
 
-    <script src="script.js"></script>
+    <!--time scripting-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var timerElement = document.getElementById("timer");
+
+            var startDate = new Date(2023, 9, 17); // Note: Months are zero-indexed, so 9 represents October.
+
+            function updateTimer() {
+                var currentDate = new Date();
+
+                var timeElapsed = currentDate - startDate;
+
+                var millisecondsInSecond = 1000;
+                var millisecondsInMinute = millisecondsInSecond * 60;
+                var millisecondsInHour = millisecondsInMinute * 60;
+                var millisecondsInDay = millisecondsInHour * 24;
+
+                var days = Math.floor(timeElapsed / millisecondsInDay);
+                var hours = Math.floor((timeElapsed % millisecondsInDay) / millisecondsInHour);
+                var minutes = Math.floor((timeElapsed % millisecondsInHour) / millisecondsInMinute);
+                var seconds = Math.floor((timeElapsed % millisecondsInMinute) / millisecondsInSecond);
+
+                //var weeks = Math.floor(days / 7);
+                //var months = Math.floor(days / 30); 
+
+                var elapsedDays = days;
+                //var remainingWeeks = weeks % 4; // Approximating a month as 4 weeks
+
+                // Display the timer information
+                var timerString =
+                    elapsedDays + " Days, " +
+                    hours + " : " +
+                    minutes + " : " +
+                    seconds + " ";
+
+                timerElement.textContent = timerString;
+            }
+
+            // Call updateTimer immediately to display the initial time
+            updateTimer();
+
+            // Update the timer every second (1000 milliseconds)
+            setInterval(updateTimer, 1000);
+        });
+    </script>
 
     <div  class="split right">
         <div id="globeViz" class="centered"></div>
@@ -35,66 +71,58 @@
         </div>
     </div>
     
-  
+    <!--globe scripting-->
     <script>
-  
-    const COUNTRY = 'United States';
-    const OPACITY = 0.8;
-  
-    const myGlobe = Globe()
-      (document.getElementById('globeViz'))
-  
-      .globeImageUrl('https://unpkg.com/three-globe@2.30.0/example/img/earth-night.jpg')
-      .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
-  
-      .arcLabel(d => `${d.airline}: ${d.srcIata} &#8594; ${d.dstIata}`)
-      .arcStartLat(d => +d.srcAirport.lat)
-      .arcStartLng(d => +d.srcAirport.lng)
-      .arcEndLat(d => +d.dstAirport.lat)
-      .arcEndLng(d => +d.dstAirport.lng)
-      .arcDashLength(1)
-      .arcDashGap(0.5)
-      .arcDashInitialGap(() => Math.random())
-      .arcDashAnimateTime(4000)
-      .arcColor(d => [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`])
-      .arcsTransitionDuration(0)
-  
-      .pointColor(() => 'orange')
-      .pointAltitude(0)
-      .pointRadius(0.02)
-      .pointsMerge(true);
-  
-    // load data
-  
-    const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
-    const routeParse = ([airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment]) => ({ airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment});
-  
-  
-    Promise.all([
-      fetch('https://raw.githubusercontent.com/lipebento/CanvasWebSample/main/airports.dat').then(res => res.text())
-        .then(d => d3.csvParseRows(d, airportParse)),
-      fetch('https://raw.githubusercontent.com/lipebento/CanvasWebSample/main/routes.dat').then(res => res.text())
-        .then(d => d3.csvParseRows(d, routeParse))
-    ]).then(([airports, routes]) => {
-  
-      const byIata = indexBy(airports, 'iata', false);
-  
-      const filteredRoutes = routes
-        .filter(d => byIata.hasOwnProperty(d.srcIata) && byIata.hasOwnProperty(d.dstIata)) // exclude unknown airports
-        //.filter(d => d.stops === '0') // non-stop flights only
-        .map(d => Object.assign(d, {
-          srcAirport: byIata[d.srcIata],
-          dstAirport: byIata[d.dstIata]
-        }));
-        //.filter(d => d.srcAirport.country === COUNTRY && d.dstAirport.country != COUNTRY) // international routes from country
-        //.filter(d => d.dstAirport.country === "Ireland"); // international routes from country
-        //.filter(d => d.dstAirport. === "DUB"); // international routes from country
-        //.filter(d => d.srcAirportId === "LAX" || d.srcAirportId.srcAirportId == "ORD"); // international routes from country
-        
-  
-      myGlobe
-        .pointsData(airports)
-        .arcsData(filteredRoutes);
-    });
+        const COUNTRY = 'United States';
+        const OPACITY = 0.8;
+    
+        const myGlobe = Globe()
+        (document.getElementById('globeViz'))
+    
+        .globeImageUrl('https://unpkg.com/three-globe@2.30.0/example/img/earth-night.jpg')
+        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
+    
+        .arcLabel(d => `${d.srcIata} &#8594; ${d.dstIata}`)
+        .arcStartLat(d => +d.srcAirport.lat)
+        .arcStartLng(d => +d.srcAirport.lng)
+        .arcEndLat(d => +d.dstAirport.lat)
+        .arcEndLng(d => +d.dstAirport.lng)
+        .arcDashLength(1)
+        .arcDashGap(0.5)
+        .arcDashInitialGap(() => Math.random())
+        .arcDashAnimateTime(4000)
+        .arcColor(d => [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`])
+        .arcsTransitionDuration(0)
+        .pointColor(() => 'orange')
+        .pointAltitude(0)
+        .pointRadius(0.02)
+        .pointsMerge(true);
+    
+        // load data
+    
+        const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
+        const routeParse = ([airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment]) => ({ airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment});
+    
+    
+        Promise.all([
+        fetch('https://raw.githubusercontent.com/lipebento/CanvasWebSample/main/airports.dat').then(res => res.text())
+            .then(d => d3.csvParseRows(d, airportParse)),
+        fetch('https://raw.githubusercontent.com/lipebento/CanvasWebSample/main/routes.dat').then(res => res.text())
+            .then(d => d3.csvParseRows(d, routeParse))
+        ]).then(([airports, routes]) => {
+    
+        const byIata = indexBy(airports, 'iata', false);
+    
+        const filteredRoutes = routes
+            .filter(d => byIata.hasOwnProperty(d.srcIata) && byIata.hasOwnProperty(d.dstIata)) // exclude unknown airports
+            .map(d => Object.assign(d, {
+            srcAirport: byIata[d.srcIata],
+            dstAirport: byIata[d.dstIata]
+            }));            
+    
+        myGlobe
+            .pointsData(airports)
+            .arcsData(filteredRoutes);
+        });
   </script>
   </body>
