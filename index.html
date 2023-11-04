@@ -17,7 +17,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var timerElement = document.getElementById("timer");
-
             var startDate = new Date(2023, 9, 17); // Note: Months are zero-indexed, so 9 represents October.
 
             function updateTimer() {
@@ -94,11 +93,8 @@
         .pointRadius(0.02)
         .pointsMerge(true);
     
-        // load data
-    
         const airportParse = ([airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source]) => ({ airportId, name, city, country, iata, icao, lat, lng, alt, timezone, dst, tz, type, source });
         const routeParse = ([airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment]) => ({ airline, airlineId, srcIata, srcAirportId, dstIata, dstAirportId, codeshare, stops, equipment});
-    
     
         Promise.all([
         fetch('https://raw.githubusercontent.com/lipebento/CanvasWebSample/main/airports.dat').then(res => res.text())
