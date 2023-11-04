@@ -10,14 +10,20 @@
     <div class="timer vsplit top">
         <div class="centered">
             <h1>Time:</h1>
-            <p id="timer">0:00</p>
+            <div id="days">0 days</div>
+            <div id="hours">0 hours</div>
+            <div id="minutes">0 minutes</div>
+            <div id="seconds">0 seconds</div>
         </div>
     </div>
 
     <!--time scripting-->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var timerElement = document.getElementById("timer");
+            var daysElement = document.getElementById("days");
+            var hoursElement = document.getElementById("hours");
+            var minutesElement = document.getElementById("minutes");
+            var secondsElement = document.getElementById("seconds");
 
             var startDate = new Date(2023, 9, 17); // Note: Months are zero-indexed, so 9 represents October.
 
@@ -42,13 +48,11 @@
                 var elapsedDays = days;
                 //var remainingWeeks = weeks % 4; // Approximating a month as 4 weeks
 
-                var timerString =
-                    elapsedDays + " Days, " +
-                    hours + " : " +
-                    minutes + " : " +
-                    seconds + " ";
+                daysElement.textContent = elapsedDays + " Days,";
+                hoursElement.textContent = hours + " Hours,";
+                minutesElement.textContent = minutes + " Minutes,";
+                secondsElement.textContent = seconds + " Seconds";
 
-                timerElement.textContent = timerString;
             }
 
             updateTimer();
